@@ -29,12 +29,18 @@ app.get('/authorize', (req, res) => {
         return res.send(401, 'invalid client_id');
     }
     var url = `https://${context.data.AUTH0_CUSTOM_DOMAIN}${req.url}&ndi_state=${req.query.state}&ndi_nonce=${req.query.code_challenge}&singpass=true`;
+    console.log("authorize - authorization url", url);
     res.redirect(url);
 });
 
 app.post('/token', async function (req, res) {
     const context = req.webtaskContext;
     const { client_id, client_secret, code, code_verifier, redirect_uri } = req.body;
+    console.log("token - client_id", client_id);
+    console.log("token - client_secret", client_secret);
+    console.log("token - code", code);
+    console.log("token - code_verifier", code_verifier);
+    console.log("token - redirect_uri", redirect_uri);
     if (!client_id || !client_secret) {
         return res.send(400, 'missing client_id / client_secret');
     }
@@ -88,10 +94,12 @@ app.post('/token', async function (req, res) {
 app.post('/verify', async function (req, res) {
     try {
         const { id_token } = response.body;
+        console.log("verify - id_token", id_token);
         if (!id_token) {
             return res.status(400).send('ID_TOKEN required');
         }
         const publicKey = await loadPublicKey(context.data);
+        console.log("verify - publicKey", publicKey);
         const { payload, protectedHeader } = await jwtVerify(id_token, publicKey, {
             issuer: context.data.ISSUER,
             audience: context.data.CLIENT_ID
