@@ -62,11 +62,19 @@
         "required": true
       },
       "RELYING_PARTY_PRIVATE_KEY": {
-        "description": "Relying Party Private Key",
+        "description": "Relying Party Private Key Signature",
+        "required": true
+      },
+      "RELYING_PARTY_PRIVATE_KEY_ENC": {
+        "description": "Relying Party Private Key Encryption",
         "required": true
       },
       "RELYING_PARTY_KID": {
-        "description": "Relying Party KID",
+        "description": "Relying Party KID Signature",
+        "required": true
+      },
+      "RELYING_PARTY_KID_ENC": {
+        "description": "Relying Party KID Encryption",
         "required": true
       }
     }
